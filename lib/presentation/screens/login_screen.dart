@@ -1,5 +1,9 @@
+import 'package:aplicacion_numero_uno/config/theme/extension_theme.dart';
+import 'package:aplicacion_numero_uno/presentation/screens/debit_screen_card.dart';
+import 'package:aplicacion_numero_uno/presentation/screens/seleccionar_detalle_a_pagar.dart';
 import 'package:aplicacion_numero_uno/utils/asset_image_app.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -9,33 +13,30 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-
           Positioned(
             top: -150,
             left: -160,
             child: Transform.rotate(
-              angle: -75/ -100,
+              angle: -75 / -100,
               child: Container(
                 height: 300,
                 width: 300,
-                color: const Color.fromARGB(255, 26, 117, 192)
+                color: const Color.fromARGB(255, 26, 117, 192),
               ),
             ),
           ),
-
-           Positioned(
+          Positioned(
             bottom: -150,
             right: -220,
             child: Transform.rotate(
-              angle: -75/ -100,
+              angle: -75 / -100,
               child: Container(
                 height: 300,
                 width: 300,
-                color: const Color.fromARGB(255, 26, 117, 192)
+                color: const Color.fromARGB(255, 26, 117, 192),
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(
@@ -79,30 +80,40 @@ class LoginScreen extends StatelessWidget {
                     width: 210,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        //Logica para navegar a otra pantalla
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => const DebitCardScreen()),
+                        // );
+                        context.go(SeleccionarDetalleScreen.path);
+                        // context.push(SeleccionarDetalleScreen.path);
+                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.amber,
+                        backgroundColor: Theme.of(context).colorScheme.yellow,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: const Text('Buscar', style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        'Buscar',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
-                 const SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
-                 const Center(
-                   child: Text(
+                const Center(
+                  child: Text(
                     '100% Transacciones seguras',
-                   ),
-                 ),
+                  ),
+                ),
               ],
             ),
           ),
-        
-        
         ],
       ),
     );

@@ -1,6 +1,16 @@
+
 import 'package:aplicacion_numero_uno/config/router/app_router.dart';
+import 'package:aplicacion_numero_uno/presentation/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
-void main() => runApp(const MyApp());
+import 'package:provider/provider.dart';
+void main() => runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context)=> ThemeProvider(),)
+  ],
+  child: const MyApp(),
+)
+ );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,11 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final providerTheme = Provider.of<ThemeProvider>(context);
 
     return MaterialApp.router(
       title: 'Aplicacion uno',
       routerConfig: appRouter,
-      
+      theme: providerTheme.currentTheme
     );
   }
 }
