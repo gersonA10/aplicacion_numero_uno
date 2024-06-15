@@ -16,6 +16,11 @@ class AuthProvider extends ChangeNotifier {
         "username": username,
         "password": password
       },
+      options: Options(
+        headers: {
+          
+        }
+      )
     );
 
     if (response.statusCode == 200) {

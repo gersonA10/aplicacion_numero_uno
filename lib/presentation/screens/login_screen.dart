@@ -1,5 +1,6 @@
 import 'package:aplicacion_numero_uno/config/theme/extension_theme.dart';
 import 'package:aplicacion_numero_uno/presentation/providers/auth_provider.dart';
+import 'package:aplicacion_numero_uno/presentation/providers/login_provider.dart';
 import 'package:aplicacion_numero_uno/presentation/screens/news/news_home_screen.dart';
 import 'package:aplicacion_numero_uno/presentation/screens/seleccionar_detalle_a_pagar.dart';
 import 'package:aplicacion_numero_uno/utils/asset_image_app.dart';
@@ -15,8 +16,10 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final loginProvider = Provider.of<LoginProvider>(context);
+    
     // authProvider.login("sintesis", "sintesis22");
+
     return Scaffold(
       body: Stack(
         children: [
@@ -74,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                   TextFormField(
                     controller: textEditingControllerUsername,
                     decoration: InputDecoration(
-                      hintText: 'Username',
+                      hintText: 'Buscador',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -82,19 +85,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                    const SizedBox(
                     height: 20,
-                  ),
-                   TextFormField(
-                    controller: textEditingControllerPassword,
-                    // onChanged: (value) {
-                    //   print(value);
-                    // },
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-
                   ),
                   Center(
                     child: Container(
@@ -116,8 +106,8 @@ class LoginScreen extends StatelessWidget {
                           //   MaterialPageRoute(
                           //       builder: (context) => const DebitCardScreen()),
                           // );
-                          context.go(NewsHomeScreen.path);
-                          // context.push(SeleccionarDetalleScreen.path);
+                          // context.go(NewsHomeScreen.path);
+                          context.push(SeleccionarDetalleScreen.path);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.yellow,
