@@ -93,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          // String username = textEditingControllerUsername.text;
+                          String username = textEditingControllerUsername.text;
                           // String password = textEditingControllerPassword.text;
 
                           // print(username);
@@ -107,7 +107,8 @@ class LoginScreen extends StatelessWidget {
                           //       builder: (context) => const DebitCardScreen()),
                           // );
                           // context.go(NewsHomeScreen.path);
-                          context.push(SeleccionarDetalleScreen.path);
+                          loginProvider.searchIDUser(username, context);
+                          // context.push(SeleccionarDetalleScreen.path);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.yellow,
@@ -116,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          'Iniciar Sesion',
+                          'Buscar',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

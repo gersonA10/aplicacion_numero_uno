@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 NewsModel newsModelFromJson(String str) => NewsModel.fromJson(json.decode(str));
 
 String newsModelToJson(NewsModel data) => json.encode(data.toJson());
@@ -39,7 +41,7 @@ class Article {
     final String? description;
     final String url;
     final String? urlToImage;
-    final DateTime publishedAt;
+    final String publishedAt;
     final String? content;
 
     Article({
@@ -60,7 +62,7 @@ class Article {
         description: json["description"],
         url: json["url"],
         urlToImage: json["urlToImage"],
-        publishedAt: DateTime.parse(json["publishedAt"]),
+        publishedAt: DateFormat.yMMMMd().format(DateTime.parse(json["publishedAt"]),),
         content: json["content"],
     );
 
@@ -71,7 +73,7 @@ class Article {
         "description": description,
         "url": url,
         "urlToImage": urlToImage,
-        "publishedAt": publishedAt.toIso8601String(),
+        "publishedAt": publishedAt,
         "content": content,
     };
 }

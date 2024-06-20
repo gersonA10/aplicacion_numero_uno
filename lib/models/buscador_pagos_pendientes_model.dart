@@ -23,7 +23,9 @@ class BuscadorPagosPendientes {
     factory BuscadorPagosPendientes.fromJson(Map<String, dynamic> json) => BuscadorPagosPendientes(
         correofacturas: json["correofacturas"],
         cliente: Cliente.fromJson(json["cliente"]),
-        items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
+        items:  json["items"] == null 
+        ? [] 
+        : List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
         errorCode: json["errorCode"],
         message: json["message"],
     );
@@ -65,8 +67,8 @@ class Cliente {
         nombres: json["Nombres"],
         codAlumno: json["CodAlumno"],
         unidadAcademica: json["UnidadAcademica"],
-        emailEmi: json["email_emi"],
-        eMail: json["EMail"],
+        emailEmi: json["email_emi"] ?? '',
+        eMail: json["EMail"] ?? '',
     );
 
     Map<String, dynamic> toJson() => {

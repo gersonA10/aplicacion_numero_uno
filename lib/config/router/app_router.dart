@@ -1,4 +1,5 @@
 import 'package:aplicacion_numero_uno/presentation/screens/login_screen.dart';
+import 'package:aplicacion_numero_uno/presentation/screens/news/detail_screen.dart';
 import 'package:aplicacion_numero_uno/presentation/screens/news/news_home_screen.dart';
 import 'package:aplicacion_numero_uno/presentation/screens/pago_de_cuentas_screen.dart';
 import 'package:aplicacion_numero_uno/presentation/screens/seleccionar_detalle_a_pagar.dart';
@@ -26,5 +27,10 @@ final appRouter = GoRouter(
       name: NewsHomeScreen.name,
       builder: (context, state) => const NewsHomeScreen(),
     ),
+    //  GoRoute(
+    //   path: DetailScreen.path,
+    //   name: DetailScreen.name,
+    //   builder: (context, state) => const DetailScreen(),
+    // ),
   ],
 );

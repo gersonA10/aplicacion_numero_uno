@@ -41,7 +41,7 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    List datos = response['datos'];
+    final loginProvider = Provider.of<LoginProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,19 +49,13 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
         actions: [
           IconButton(
             onPressed: (){
-              
               themeProvider.changeTheme();
             }, 
             icon:  Icon( themeProvider.isDark ? Icons.light_mode : Icons.dark_mode ),
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: LoginProvider().searchIDUser('12423693'),
-        builder: (context, snapshot) {
-          return snapshot.connectionState != ConnectionState.done 
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
+      body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +119,7 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                 Row(
+                  Row(
                   children: [
                     const Text(
                       'CI:',
@@ -137,7 +131,7 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
                       width: 10,
                     ),
                     Text(
-                       snapshot.data!.cliente.ci
+                     loginProvider.ci,
                     ),
                     const SizedBox(
                       width: 80,
@@ -151,34 +145,36 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
                     const SizedBox(
                       width: 10,
                     ),
-                     Text(
-                      snapshot.data!.cliente.nombres
+                     const Text(
+                      ""
                     ),
                   ],
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: snapshot.data!.items.length,
+                    itemCount: loginProvider.listaPagosPendientes.length,
                     itemBuilder: (context, index) {
-                      final item = datos[index];
+                      final item = loginProvider.listaPagosPendientes[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
                         child: CustomTable(
                           numeral: '# 000 ${index + 1}',
                           titleDetalle: 'Detalle:',
-                          contentDetalle: '${snapshot.data!.items[index].item}',
+                          contentDetalle: item.item,
                           titleMonto: 'Monto:',
-                          contentMonto: '${snapshot.data!.items[index].montototal}',
-                          children: [
-                            const Text('Seleccionar'),
-                            Checkbox(
-                              value: item['isSelected'],
-                              onChanged: (valor) {
-                                //CTRL+S
-                                setState(() {
-                                  item['isSelected'] = valor;
-                                });
-                              },
+                          contentMonto: '${item.montototal}',
+                          children:  [
+                             Text('Seleccionar'),
+                            Checkbox( 
+                              value: false, 
+                              onChanged: (bool? value) {  },
+                             
+                              // onChanged: (bool? value) {  },: (valor) {
+                              //   //CTRL+S
+                              //   setState(() {
+                              //     item['isSelected'] = valor;
+                              //   });
+                              // },
                             ),
                           ],
                         ),
@@ -188,9 +184,7 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
                 )
               ],
             ),
-          );
-        }
-      ),
+          ),
     );
   }
 }
