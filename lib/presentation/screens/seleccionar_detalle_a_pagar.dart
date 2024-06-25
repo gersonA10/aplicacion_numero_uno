@@ -1,11 +1,15 @@
 import 'package:aplicacion_numero_uno/config/theme/extension_theme.dart';
-import 'package:aplicacion_numero_uno/presentation/providers/login_provider.dart';
+import 'package:aplicacion_numero_uno/presentation/providers/auth_provider.dart';
+import 'package:aplicacion_numero_uno/presentation/providers/buscar_estudiante_provider.dart';
 import 'package:aplicacion_numero_uno/presentation/providers/theme_provider.dart';
+import 'package:aplicacion_numero_uno/presentation/screens/login_screen.dart';
 import 'package:aplicacion_numero_uno/presentation/screens/pago_de_cuentas_screen.dart';
 import 'package:aplicacion_numero_uno/presentation/widgets/custom_table_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SeleccionarDetalleScreen extends StatefulWidget {
   static const name = 'seleccionar-detalle';
@@ -19,29 +23,31 @@ class SeleccionarDetalleScreen extends StatefulWidget {
 }
 
 class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
-  Map<String, dynamic> response = {
-    'datos': [
-      {
-        "detalle": "Certifiaciones en Linea",
-        "monto": "Bs 15.00",
-        "isSelected": false
-      },
-      {
-        "detalle": "Extension Universitaria",
-        "monto": "Bs 15.00",
-        "isSelected": false
-      },
-      {"detalle": "Segunda couta", "monto": "Bs 15.00", "isSelected": false},
-      {"detalle": "Atencion Medica", "monto": "Bs 15.00", "isSelected": false},
-    ],
-    'message': '',
-    'error': '',
-  };
+
+
+ @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      final buscarEstudianteProvider = Provider.of<BuscarEstudianteProvider>(context, listen: false);
+
+      buscarEstudianteProvider.searchIDUser(  pref.getString('idUser')!, context);
+
+      // Future.delayed(const Duration(seconds: 20),(){
+      //   context.go(LoginScreen.path);
+      //   pref.clear();
+      // });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final loginProvider = Provider.of<LoginProvider>(context);
+    final buscarEstudianteProvider = Provider.of<BuscarEstudianteProvider>(context);
+    final loginProvider = Provider.of<AuthProvider>(context);
+
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -53,6 +59,11 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
             }, 
             icon:  Icon( themeProvider.isDark ? Icons.light_mode : Icons.dark_mode ),
           ),
+          TextButton(
+            onPressed: (){
+            loginProvider.logOut(context);
+            }, 
+          child: const Text('Cerrar Sesion', style: TextStyle(color: Colors.white),),)
         ],
       ),
       body: Padding(
@@ -131,7 +142,7 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
                       width: 10,
                     ),
                     Text(
-                     loginProvider.ci,
+                     buscarEstudianteProvider.ci,
                     ),
                     const SizedBox(
                       width: 80,
@@ -152,9 +163,9 @@ class _SeleccionarDetalleScreenState extends State<SeleccionarDetalleScreen> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: loginProvider.listaPagosPendientes.length,
+                    itemCount: buscarEstudianteProvider.listaPagosPendientes.length,
                     itemBuilder: (context, index) {
-                      final item = loginProvider.listaPagosPendientes[index];
+                      final item = buscarEstudianteProvider.listaPagosPendientes[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
                         child: CustomTable(

@@ -2,7 +2,7 @@
 
 import 'package:aplicacion_numero_uno/config/router/app_router.dart';
 import 'package:aplicacion_numero_uno/presentation/providers/auth_provider.dart';
-import 'package:aplicacion_numero_uno/presentation/providers/login_provider.dart';
+import 'package:aplicacion_numero_uno/presentation/providers/buscar_estudiante_provider.dart';
 import 'package:aplicacion_numero_uno/presentation/providers/news_provider.dart';
 import 'package:aplicacion_numero_uno/presentation/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ void main() => runApp(
       ChangeNotifierProvider(create: (context) => ThemeProvider(),),
       ChangeNotifierProvider(create: (context) => AuthProvider(),),
       ChangeNotifierProvider(create: (context) => NewsProvider()),
-      ChangeNotifierProvider(create: (context) => LoginProvider())
+      ChangeNotifierProvider(create: (context) => BuscarEstudianteProvider())
   ],
   child: const MyApp(),
 )
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp.router(
       title: 'Aplicacion uno',
-      routerConfig: appRouter,
+      routerConfig: AppRouter.appRouter,
       theme: providerTheme.currentTheme
     );
   }
